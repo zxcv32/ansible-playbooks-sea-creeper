@@ -1,0 +1,21 @@
+---
+- name: Deleting InfluxDB Docker Container
+  hosts:
+    docker
+  vars_files:
+    - env
+  become: true
+  become_user: "{{ ansible_user }}"
+  tasks:
+    - name: Copy Docker Compose YAML
+      copy:
+        src: requirements
+        dest: "{{ directory }}"
+    - name: InfluxDB Down
+      command: docker-compose -p db down
+      args:
+        chdir: "{{ directory }}/requirements"
+    - name: Delete Docker Compose YAML
+      file:directory
+        state: absent
+        path: "{{ directory }}"
