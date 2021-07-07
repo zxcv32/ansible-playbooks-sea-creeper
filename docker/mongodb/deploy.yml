@@ -38,8 +38,6 @@
         MONGO_INITDB_ROOT_USERNAME: "{{ username }}"
         MONGO_INITDB_ROOT_PASSWORD: "{{ password }}"
         MONGO_INITDB_DATABASE: "{{ database }}"
-        ME_CONFIG_MONGODB_ADMINUSERNAME: "{{ express_username }}"
-        ME_CONFIG_MONGODB_ADMINPASSWORD: "{{ express_password }}"
     - name: Delete Docker Compose YAML
       file:
         state: absent
