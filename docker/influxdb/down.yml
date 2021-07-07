@@ -16,6 +16,6 @@
       args:
         chdir: "{{ directory }}/requirements"
     - name: Delete Docker Compose YAML
-      file:directory
+      file:
         state: absent
         path: "{{ directory }}"
