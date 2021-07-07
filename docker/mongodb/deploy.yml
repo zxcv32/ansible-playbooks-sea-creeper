@@ -1,0 +1,46 @@
+---
+- name: Deploy MongoDB and MongoDB Express Docker Containers
+  hosts:
+    docker
+  vars_files:
+    - env
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars_prompt:
+  - name: username
+    prompt: Enter MongoDB username
+    private: no
+    default: mongoer
+  - name: password
+    prompt: Enter MongoDB user password
+    default: mongoerpass
+  - name: database
+    prompt: Enter default MongoDB database name
+    default: seacreeper
+  - name: express_username
+    prompt: Enter admin MongoDB Express username
+    default: mongoexpresser
+  - name: express_password
+    prompt: Enter admin MongoDB Express password
+    default: mongoexpresserpass
+
+  tasks:
+    - name: Copy Docker Compose YAML
+      copy:
+        src: requirements
+        dest: "{{ directory }}"
+    - name:  Deploy
+      command: docker-compose up -d
+      args:
+        chdir: "{{ directory }}/requirements"
+      environment:
+        COMPOSE_PROJECT_NAME: "{{ docker_db_project_name }}"
+        MONGO_INITDB_ROOT_USERNAME: "{{ username }}"
+        MONGO_INITDB_ROOT_PASSWORD: "{{ password }}"
+        MONGO_INITDB_DATABASE: "{{ database }}"
+        ME_CONFIG_MONGODB_ADMINUSERNAME: "{{ express_username }}"
+        ME_CONFIG_MONGODB_ADMINPASSWORD: "{{ express_password }}"
+    - name: Delete Docker Compose YAML
+      file:
+        state: absent
+        path: "{{ directory }}"

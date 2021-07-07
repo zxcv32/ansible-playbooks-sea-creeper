@@ -1,0 +1,2 @@
+directory: /tmp/mongodb
+docker_db_project_name: db
