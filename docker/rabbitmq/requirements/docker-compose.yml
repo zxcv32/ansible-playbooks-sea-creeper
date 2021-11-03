@@ -1,0 +1,20 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management # default creds guest:guest
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+        reservations:
+          memory: 256m
+    ports:
+      - "4369:4369"
+      - "5671-5672:5671-5672"
+      - "15671-15672:15671-15672"
+    networks:
+      - rabbits
+networks:
+  rabbits:
+    driver: bridge

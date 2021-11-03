@@ -1,0 +1,2 @@
+directory: /tmp/rabbitmq
+docker_db_project_name: mq

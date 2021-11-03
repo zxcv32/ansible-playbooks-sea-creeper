@@ -1,0 +1,24 @@
+---
+- name: Deploy RabbitMQ Docker Containers
+  hosts:
+    docker
+  vars_files:
+    - env
+  become: true
+  become_user: "{{ ansible_user }}"
+
+  tasks:
+    - name: Copy Docker Compose YAML
+      copy:
+        src: requirements
+        dest: "{{ directory }}"
+    - name: Deploy
+      command: docker-compose up --build -d
+      args:
+        chdir: "{{ directory }}/requirements"
+      environment:
+        COMPOSE_PROJECT_NAME: "{{ docker_db_project_name }}"
+    - name: Delete Docker Compose YAML
+      file:
+        state: absent
+        path: "{{ directory }}"
