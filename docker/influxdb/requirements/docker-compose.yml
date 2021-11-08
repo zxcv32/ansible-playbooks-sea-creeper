@@ -13,7 +13,10 @@ services:
       - 8086:8086
     networks:
       - db
+      - creeper
 
 networks:
   db:
+    driver: bridge
+  creeper:
     driver: bridge

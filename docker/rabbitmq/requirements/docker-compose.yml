@@ -14,7 +14,10 @@ services:
       - "5671-5672:5671-5672"
       - "15671-15672:15671-15672"
     networks:
-      - rabbits
+      - mq
+      - creeper
 networks:
-  rabbits:
+  mq:
+    driver: bridge
+  creeper:
     driver: bridge
