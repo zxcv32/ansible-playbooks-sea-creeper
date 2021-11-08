@@ -1,7 +1,7 @@
 version: '3'
 services:
   influxdb:
-    image: influxdb:2.0
+    image: influxdb:2.1
     restart: always
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
